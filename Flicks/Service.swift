@@ -19,7 +19,7 @@ class WebService {
     )
     
     private func performRequest<ResponseType: Decodable>(request:NSURLRequest,
-        success: (ResponseType) ->Void = {_ in },
+        success: (ResponseType) -> Void = {_ in },
         failure: () -> Void = {}) -> AsyncNetTask {
             let task : NSURLSessionDataTask = session.dataTaskWithRequest(request,
                 completionHandler: { (data, response, error) in
@@ -50,12 +50,12 @@ class MovieDBService: WebService {
     private static let nowPlayingUrl = "\(baseUrl)/now_playing?api_key=\(apiKey)"
     private static let topRatedUrl = "\(baseUrl)/now_playing?api_key=\(apiKey)"
     
-    func retrieveNowPlaying(success: (ResultPage) ->Void = {_ in }, failure: () -> Void = {}) -> AsyncNetTask {
+    func retrieveNowPlaying(success success: (ResultPage) -> Void = {_ in }, failure: () -> Void = {}) -> AsyncNetTask {
         let request = NSURLRequest(URL: NSURL(string: MovieDBService.nowPlayingUrl)!)
         return performRequest(request, success: success, failure: failure)
     }
     
-    func retrieveTopRated(success: (ResultPage) ->Void = {_ in }, failure: () -> Void = {}) -> AsyncNetTask {
+    func retrieveTopRated(success success: (ResultPage) -> Void = {_ in }, failure: () -> Void = {}) -> AsyncNetTask {
         let request = NSURLRequest(URL: NSURL(string: MovieDBService.topRatedUrl)!)
         return performRequest(request, success: success, failure: failure)
     }

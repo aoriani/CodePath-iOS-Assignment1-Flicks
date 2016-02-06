@@ -18,7 +18,7 @@ struct Movie: Decodable {
     let originalTitle:String
     let originalLanguage: String
     let title: String
-    let backdropPath: String
+    let backdropPath: String?
     let popularity: Decimal
     let voteCount: UInt
     let voteAverage: Decimal
