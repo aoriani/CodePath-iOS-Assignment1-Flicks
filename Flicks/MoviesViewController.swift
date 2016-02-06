@@ -14,7 +14,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
     @IBOutlet var topView: UIView!
     @IBOutlet weak var movieTableView: UITableView!
     let movieDbService = MovieDBService()
-    var movieDataSource: MovieDataSource?
+    var movieDataSource: MovieDataSource!
     var contentLoaderTask: AsyncNetTask?
     var loaderMethod = MovieDBService.retrieveNowPlaying
     
@@ -30,7 +30,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
         progressDialog.show(true)
         loaderMethod(movieDbService)(success: {
                 resultPage in
-                    self.movieDataSource?.items = resultPage.results
+                    self.movieDataSource.items = resultPage.results
                     progressDialog.hide(true)
             },
             failure: {
@@ -50,7 +50,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
         if contentLoaderTask == nil {
             loaderMethod(movieDbService)(success: {
                 resultPage in
-                    self.movieDataSource?.items = resultPage.results
+                    self.movieDataSource.items = resultPage.results
                     refreshControl.endRefreshing()
             },
             failure: {
@@ -61,6 +61,14 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        let movieDetailsViewController = segue.destinationViewController as! MovieDetailsViewController
+        let indexPath = movieTableView.indexPathForCell(sender as! MovieCell)
+        let movie = movieDataSource.items[indexPath!.row]
+        movieDetailsViewController.movie = movie
+        movieDetailsViewController.navigationItem.title = movie.title
     }
 }
 
