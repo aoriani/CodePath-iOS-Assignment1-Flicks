@@ -54,11 +54,30 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <view opaque="NO" contentMode="scaleToFill" id="0JG-NA-zw1">
+                                <rect key="frame" x="0.0" y="65" width="320" height="27"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="center" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="warn" id="les-1m-IRa">
+                                        <rect key="frame" x="23" y="1" width="24" height="24"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="We're experiencing problems. Try again" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Vct-2B-68s">
+                                        <rect key="frame" x="48" y="3" width="251" height="21"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <fontDescription key="fontDescription" type="system" weight="medium" pointSize="13"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="0.84827586206896544" colorSpace="calibratedRGB"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="z70-SQ-d7F"/>
                     <connections>
+                        <outlet property="errorToast" destination="0JG-NA-zw1" id="vKV-8K-APC"/>
                         <outlet property="movieTableView" destination="ZK3-fK-zWg" id="nXN-0G-NeH"/>
                         <outlet property="topView" destination="8bC-Xf-vdC" id="KWi-9L-K2S"/>
                     </connections>
@@ -170,5 +189,6 @@
     <resources>
         <image name="date" width="16" height="16"/>
         <image name="star" width="16" height="16"/>
+        <image name="warn" width="16" height="16"/>
     </resources>
 </document>

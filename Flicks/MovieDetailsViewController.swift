@@ -36,7 +36,6 @@ class MovieDetailsViewController: UIViewController {
         adjustInfoViewSize()
         scrollView.contentSize = CGSize(width: scrollView.frame.width, height: infoView.frame.origin.y + infoView.frame.height + 20)
         
-        
     }
     
     private func formatRating(decimal: Decimal) -> String {

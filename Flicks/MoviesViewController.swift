@@ -13,6 +13,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
     
     @IBOutlet var topView: UIView!
     @IBOutlet weak var movieTableView: UITableView!
+    @IBOutlet weak var errorToast: UIView!
     let movieDbService = MovieDBService()
     var movieDataSource: MovieDataSource!
     var contentLoaderTask: AsyncNetTask?
@@ -21,6 +22,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupRefreshControl()
+        errorToast.hidden = true
         movieTableView.delegate = self
         movieDataSource = MovieDataSource(forTable: movieTableView)
         
@@ -35,6 +37,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
             },
             failure: {
                 progressDialog.hide(false)
+                self.showErrorToast()
         })
         
     }
@@ -54,6 +57,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
             },
             failure: {
                 refreshControl.endRefreshing()
+                self.showErrorToast()
             })
         }
     }
@@ -68,6 +72,29 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
         let movie = movieDataSource.items[indexPath!.row]
         movieDetailsViewController.movie = movie
         movieDetailsViewController.navigationItem.title = movie.title
+    }
+    
+    func showErrorToast() {
+        errorToast.hidden = false
+        errorToast.alpha = 0
+        UIView.animateWithDuration(0.3,
+            delay: 0,
+            options: .CurveEaseIn,
+            animations: {
+                self.errorToast.alpha = 1
+            },
+            completion: {
+            _ in UIView.animateWithDuration(0.3,
+                delay: 2,
+                options: .CurveEaseOut,
+                animations: {
+                    self.errorToast.alpha = 0
+                },
+                completion: {
+                    _ in self.errorToast.alpha = 1
+                    self.errorToast.hidden = true
+            })
+        })
     }
 }
 
