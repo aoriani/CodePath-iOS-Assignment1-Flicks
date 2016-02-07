@@ -16,6 +16,8 @@ class MovieDetailsViewController: UIViewController {
     var movie: Movie!
 
     @IBOutlet weak var posterImageView: UIImageView!
+    @IBOutlet weak var scrollView: UIScrollView!
+    @IBOutlet weak var infoView: UIView!
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var ratingLabel: UILabel!
     @IBOutlet weak var releaseDateLabel: UILabel!
@@ -31,6 +33,10 @@ class MovieDetailsViewController: UIViewController {
         releaseDateLabel.text = formatReleaseDate(movie.releaseDate)
         overViewLabel.text = movie.overview
         overViewLabel.sizeToFit()
+        adjustInfoViewSize()
+        scrollView.contentSize = CGSize(width: scrollView.frame.width, height: infoView.frame.origin.y + infoView.frame.height + 20)
+        
+        
     }
     
     private func formatRating(decimal: Decimal) -> String {
@@ -48,5 +54,10 @@ class MovieDetailsViewController: UIViewController {
         } else {
             return "Not Available"
         }
+    }
+    
+    private func adjustInfoViewSize() {
+        let height = overViewLabel.frame.origin.y + overViewLabel.frame.height + 20
+        infoView.frame.size.height = height
     }
 }

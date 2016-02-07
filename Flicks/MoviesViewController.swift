@@ -37,7 +37,6 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
                 progressDialog.hide(false)
         })
         
-        
     }
     
     func setupRefreshControl() {
