@@ -48,7 +48,7 @@ class MovieDBService: WebService {
     private static let apiKey = "a07e22bc18f5cb106bfe4cc1f83ad8ed"
     private static let baseUrl = "https://api.themoviedb.org/3/movie"
     private static let nowPlayingUrl = "\(baseUrl)/now_playing?api_key=\(apiKey)"
-    private static let topRatedUrl = "\(baseUrl)/now_playing?api_key=\(apiKey)"
+    private static let topRatedUrl = "\(baseUrl)/top_rated?api_key=\(apiKey)"
     
     func retrieveNowPlaying(success success: (ResultPage) -> Void = {_ in }, failure: () -> Void = {}) -> AsyncNetTask {
         let request = NSURLRequest(URL: NSURL(string: MovieDBService.nowPlayingUrl)!)

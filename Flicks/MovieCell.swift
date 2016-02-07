@@ -17,7 +17,9 @@ class MovieCell: UITableViewCell {
     
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        let backgroundView = UIView()
+        backgroundView.backgroundColor = UIColor(red: 1, green: 204.0/255, blue: 102.0/255, alpha: 1)
+        selectedBackgroundView = backgroundView
     }
 
     override func setSelected(selected: Bool, animated: Bool) {
@@ -30,7 +32,7 @@ class MovieCell: UITableViewCell {
         titleLabel.text = movie.title
         overviewLabel.text = movie.overview
         if let posterUrl = movie.posterUrl {
-            posterImageView.setImageWithURL(posterUrl)
+            posterImageView.fadedSetImageWithUrl(posterUrl)
         }
     }
 

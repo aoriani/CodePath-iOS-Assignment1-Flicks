@@ -15,7 +15,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
-        // Override point for customization after application launch.
+        window = UIWindow(frame: UIScreen.mainScreen().bounds)
+        let storyBoard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let nowPlayingNavVC = storyBoard.instantiateViewControllerWithIdentifier("navController") as! UINavigationController
+        let nowPlayingVC = nowPlayingNavVC.topViewController as! MoviesViewController
+        nowPlayingVC.loaderMethod = MovieDBService.retrieveNowPlaying
+        nowPlayingNavVC.tabBarItem.title = "Now Playing"
+        nowPlayingNavVC.tabBarItem.image = UIImage(named: "now")
+        
+        let topRatedNavVC = storyBoard.instantiateViewControllerWithIdentifier("navController") as! UINavigationController
+        let topRateVC = topRatedNavVC.topViewController as! MoviesViewController
+        topRateVC.loaderMethod = MovieDBService.retrieveTopRated
+        topRatedNavVC.tabBarItem.title = "Top Rated"
+        topRatedNavVC.tabBarItem.image = UIImage(named: "top")
+        
+        let tabController = UITabBarController()
+        tabController.viewControllers = [nowPlayingNavVC, topRatedNavVC]
+        tabController.tabBar.barStyle = .Black
+        tabController.tabBar.tintColor = UIColor(red: 1, green: 204.0/255, blue: 102.0/255, alpha: 1)
+        window?.rootViewController = tabController
+        
         return true
     }
 

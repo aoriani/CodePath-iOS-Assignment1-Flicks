@@ -25,8 +25,9 @@ class MovieDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let posterUrl = movie.fullResolutionPosterUrl {
-            posterImageView.setImageWithURL(posterUrl)
+        if let posterHighResUrl = movie.fullResolutionPosterUrl,
+            posterLowResUrl = movie.lowResolutionPosterUrl  {
+            posterImageView.setLowHighResolutionImageWithUrl(lowRes: posterLowResUrl, highRes: posterHighResUrl)
         }
         titleLabel.text = movie.title
         ratingLabel.text = formatRating(movie.voteAverage)

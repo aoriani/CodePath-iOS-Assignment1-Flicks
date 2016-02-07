@@ -17,7 +17,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
     let movieDbService = MovieDBService()
     var movieDataSource: MovieDataSource!
     var contentLoaderTask: AsyncNetTask?
-    var loaderMethod = MovieDBService.retrieveNowPlaying
+    var loaderMethod:  (MovieDBService -> (success: (ResultPage) -> Void, failure: () -> Void) -> AsyncNetTask)!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,9 +26,10 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
         movieTableView.delegate = self
         movieDataSource = MovieDataSource(forTable: movieTableView)
         
-        
         //Initial Load
         let progressDialog = MBProgressHUD.showHUDAddedTo(topView, animated: true)
+        progressDialog.labelText = "Loading"
+        progressDialog.color = UIColor.darkGrayColor()
         progressDialog.show(true)
         loaderMethod(movieDbService)(success: {
                 resultPage in
@@ -44,6 +45,8 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
     
     func setupRefreshControl() {
         let refreshControl = UIRefreshControl()
+        refreshControl.backgroundColor = UIColor.blackColor()
+        refreshControl.tintColor = UIColor.whiteColor()
         refreshControl.addTarget(self, action: "refreshContent:", forControlEvents: UIControlEvents.ValueChanged)
         movieTableView.insertSubview(refreshControl, atIndex: 0)
     }
@@ -72,6 +75,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
         let movie = movieDataSource.items[indexPath!.row]
         movieDetailsViewController.movie = movie
         movieDetailsViewController.navigationItem.title = movie.title
+        movieDetailsViewController.hidesBottomBarWhenPushed = true
     }
     
     func showErrorToast() {
