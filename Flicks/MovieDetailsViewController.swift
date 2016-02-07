@@ -7,17 +7,46 @@
 //
 
 import UIKit
+import ELCodable
 
 class MovieDetailsViewController: UIViewController {
     
+    static let ratingFormatter = NSNumberFormatter()
+    static let dateFormatter = NSDateFormatter()
     var movie: Movie!
 
     @IBOutlet weak var posterImageView: UIImageView!
-    
+    @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var ratingLabel: UILabel!
+    @IBOutlet weak var releaseDateLabel: UILabel!
+    @IBOutlet weak var overViewLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if let posterUrl = movie.fullResolutionPosterUrl { posterImageView.setImageWithURL(posterUrl)
+        if let posterUrl = movie.fullResolutionPosterUrl {
+            posterImageView.setImageWithURL(posterUrl)
+        }
+        titleLabel.text = movie.title
+        ratingLabel.text = formatRating(movie.voteAverage)
+        releaseDateLabel.text = formatReleaseDate(movie.releaseDate)
+        overViewLabel.text = movie.overview
+        overViewLabel.sizeToFit()
+    }
+    
+    private func formatRating(decimal: Decimal) -> String {
+        MovieDetailsViewController.ratingFormatter.numberStyle = .DecimalStyle
+        MovieDetailsViewController.ratingFormatter.minimumFractionDigits = 1
+        MovieDetailsViewController.ratingFormatter.maximumFractionDigits = 1
+        return MovieDetailsViewController.ratingFormatter.stringFromNumber(decimal.value)!
+    }
+    
+    private func formatReleaseDate(dateString: String) -> String {
+        MovieDetailsViewController.dateFormatter.dateFormat = "yyyy-MM-dd"
+        if let date = MovieDetailsViewController.dateFormatter.dateFromString(dateString) {
+            MovieDetailsViewController.dateFormatter.dateFormat = "MMM d, YYYY"
+            return MovieDetailsViewController.dateFormatter.stringFromDate(date)
+        } else {
+            return "Not Available"
         }
     }
 }
