@@ -9,9 +9,11 @@
 import Foundation
 import UIKit
 
-class MovieDataSource:NSObject, UITableViewDataSource {
+class MovieDataSource:NSObject, UITableViewDataSource, UICollectionViewDataSource {
     
     private var tableView: UITableView
+    private var gridView: UICollectionView
+    
     var items: [Movie] = [] {
         didSet {
             update()
@@ -26,11 +28,13 @@ class MovieDataSource:NSObject, UITableViewDataSource {
     
     private var filteredView: [Movie] = []
     
-    init(forTable tableView:  UITableView) {
+    init(forTable tableView:  UITableView, andGrid gridView: UICollectionView) {
         self.tableView = tableView
+        self.gridView = gridView
         super.init()
         
         self.tableView.dataSource = self
+        self.gridView.dataSource = self
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -43,9 +47,20 @@ class MovieDataSource:NSObject, UITableViewDataSource {
         return cell
     }
     
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return getActiveItems().count
+    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = self.gridView.dequeueReusableCellWithReuseIdentifier("movieGridCell", forIndexPath: indexPath) as! MovieGridCell
+        cell.populate(getActiveItems()[indexPath.row])
+        return cell
+    }
+    
     private func update() {
         applyFilter()
         tableView.reloadData()
+        gridView.reloadData()
     }
     
     private func applyFilter() {

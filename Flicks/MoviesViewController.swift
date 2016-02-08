@@ -13,12 +13,20 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UISearchBarDe
     
     @IBOutlet var topView: UIView!
     @IBOutlet weak var movieTableView: UITableView!
+    @IBOutlet weak var gridView: UICollectionView!
     @IBOutlet weak var errorToast: UIView!
     @IBOutlet weak var searchBar: UISearchBar!
+    @IBOutlet weak var gridTableToggle: UIBarButtonItem!
+    
+    enum Mode { case List, Grid }
+    
+    let gridIcon = UIImage(named: "grid")!
+    let listIcon = UIImage(named: "list")!
     
     let movieDbService = MovieDBService()
     var movieDataSource: MovieDataSource!
     var contentLoaderTask: AsyncNetTask?
+    var mode: Mode = .List
     var loaderMethod:  (MovieDBService -> (success: (ResultPage) -> Void, failure: () -> Void) -> AsyncNetTask)!
     
     override func viewDidLoad() {
@@ -27,7 +35,7 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UISearchBarDe
         errorToast.hidden = true
         movieTableView.delegate = self
         searchBar.delegate = self
-        movieDataSource = MovieDataSource(forTable: movieTableView)
+        movieDataSource = MovieDataSource(forTable: movieTableView, andGrid: gridView)
         if #available(iOS 9.0, *) {
             (UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self])).textColor = UIColor.whiteColor()
         }
@@ -48,14 +56,34 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UISearchBarDe
                 self.showErrorToast()
         })
         
+       updateVisibility()
+    }
+    
+    func updateVisibility() {
+        movieTableView.hidden = (mode == .Grid)
+        gridView.hidden = (mode == .List)
+        gridTableToggle.image = (mode == .List) ? gridIcon : listIcon
+    }
+    
+    @IBAction func toggleMode(sender: AnyObject) {
+        
+        mode = (mode == .List) ? .Grid : .List
+        updateVisibility()
     }
     
     func setupRefreshControl() {
-        let refreshControl = UIRefreshControl()
-        refreshControl.backgroundColor = UIColor.blackColor()
-        refreshControl.tintColor = UIColor.whiteColor()
-        refreshControl.addTarget(self, action: "refreshContent:", forControlEvents: UIControlEvents.ValueChanged)
-        movieTableView.insertSubview(refreshControl, atIndex: 0)
+        let refreshControlList = UIRefreshControl()
+        refreshControlList.backgroundColor = UIColor.blackColor()
+        refreshControlList.tintColor = UIColor.whiteColor()
+        refreshControlList.addTarget(self, action: "refreshContent:", forControlEvents: UIControlEvents.ValueChanged)
+        movieTableView.insertSubview(refreshControlList, atIndex: 0)
+        
+        let refreshControlGrid = UIRefreshControl()
+        refreshControlGrid.backgroundColor = UIColor.blackColor()
+        refreshControlGrid.tintColor = UIColor.whiteColor()
+        refreshControlGrid.addTarget(self, action: "refreshContent:", forControlEvents: UIControlEvents.ValueChanged)
+        gridView.insertSubview(refreshControlGrid, atIndex: 0)
+
     }
     
     func refreshContent(refreshControl: UIRefreshControl) {
@@ -78,7 +106,12 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UISearchBarDe
     
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         let movieDetailsViewController = segue.destinationViewController as! MovieDetailsViewController
-        let indexPath = movieTableView.indexPathForCell(sender as! MovieCell)
+        let indexPath: NSIndexPath?
+        if sender is MovieCell{
+            indexPath = movieTableView.indexPathForCell(sender as! MovieCell)
+        } else {
+            indexPath = gridView.indexPathForCell(sender as! MovieGridCell)
+        }
         let movie = movieDataSource.items[indexPath!.row]
         movieDetailsViewController.movie = movie
         movieDetailsViewController.navigationItem.title = movie.title
@@ -124,5 +157,6 @@ class MoviesViewController: UIViewController, UITableViewDelegate, UISearchBarDe
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
     }
+    
 }
 

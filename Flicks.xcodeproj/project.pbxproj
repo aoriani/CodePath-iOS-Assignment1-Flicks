@@ -18,6 +18,7 @@
 		99D5BDFA1C65E09500037D7A /* MovieDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D5BDF91C65E09500037D7A /* MovieDataSource.swift */; };
 		99D5BDFD1C66A52C00037D7A /* MovieDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D5BDFC1C66A52C00037D7A /* MovieDetailsViewController.swift */; };
 		99D5BDFF1C674D5800037D7A /* UIImageView+Loading.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D5BDFE1C674D5800037D7A /* UIImageView+Loading.swift */; };
+		99D5BE011C6832C400037D7A /* MovieGridCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 99D5BE001C6832C400037D7A /* MovieGridCell.swift */; };
 		B6AD3245202FCB3BC41596B4 /* Pods_Flicks.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6B6CED65B12E5F0660D802A3 /* Pods_Flicks.framework */; };
 /* End PBXBuildFile section */
 
@@ -37,6 +38,7 @@
 		99D5BDF91C65E09500037D7A /* MovieDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDataSource.swift; sourceTree = "<group>"; };
 		99D5BDFC1C66A52C00037D7A /* MovieDetailsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieDetailsViewController.swift; sourceTree = "<group>"; };
 		99D5BDFE1C674D5800037D7A /* UIImageView+Loading.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Loading.swift"; sourceTree = "<group>"; };
+		99D5BE001C6832C400037D7A /* MovieGridCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MovieGridCell.swift; sourceTree = "<group>"; };
 		9D5592719FB7B2208F797F6E /* Pods-Flicks.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Flicks.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Flicks/Pods-Flicks.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +120,7 @@
 			children = (
 				99D5BDF61C65D6AD00037D7A /* MovieCell.swift */,
 				99D5BDFE1C674D5800037D7A /* UIImageView+Loading.swift */,
+				99D5BE001C6832C400037D7A /* MovieGridCell.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -268,6 +271,7 @@
 				99D5BDFD1C66A52C00037D7A /* MovieDetailsViewController.swift in Sources */,
 				99D5BDE01C659CB800037D7A /* MoviesViewController.swift in Sources */,
 				99D5BDF71C65D6AD00037D7A /* MovieCell.swift in Sources */,
+				99D5BE011C6832C400037D7A /* MovieGridCell.swift in Sources */,
 				99D5BDDE1C659CB800037D7A /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
