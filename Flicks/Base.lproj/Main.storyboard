@@ -14,7 +14,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" indicatorStyle="black" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="116" sectionHeaderHeight="28" sectionFooterHeight="28" id="ZK3-fK-zWg">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="40" width="320" height="528"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="separatorColor" red="1" green="0.80000001190000003" blue="0.40000000600000002" alpha="1" colorSpace="calibratedRGB"/>
@@ -58,6 +58,15 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <searchBar contentMode="redraw" barStyle="black" placeholder="Search" id="eeP-sS-qZm">
+                                <rect key="frame" x="0.0" y="64" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <textInputTraits key="textInputTraits" spellCheckingType="no" returnKeyType="search"/>
+                                <scopeButtonTitles>
+                                    <string>Title</string>
+                                    <string>Title</string>
+                                </scopeButtonTitles>
+                            </searchBar>
                             <view opaque="NO" contentMode="scaleToFill" id="0JG-NA-zw1">
                                 <rect key="frame" x="0.0" y="64" width="320" height="27"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES"/>
@@ -83,6 +92,7 @@
                     <connections>
                         <outlet property="errorToast" destination="0JG-NA-zw1" id="vKV-8K-APC"/>
                         <outlet property="movieTableView" destination="ZK3-fK-zWg" id="nXN-0G-NeH"/>
+                        <outlet property="searchBar" destination="eeP-sS-qZm" id="Phy-Cd-QW9"/>
                         <outlet property="topView" destination="8bC-Xf-vdC" id="KWi-9L-K2S"/>
                     </connections>
                 </viewController>

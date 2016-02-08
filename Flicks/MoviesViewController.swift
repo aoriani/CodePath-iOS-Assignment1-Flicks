@@ -9,11 +9,13 @@
 import UIKit
 import MBProgressHUD
 
-class MoviesViewController: UIViewController, UITableViewDelegate {
+class MoviesViewController: UIViewController, UITableViewDelegate, UISearchBarDelegate {
     
     @IBOutlet var topView: UIView!
     @IBOutlet weak var movieTableView: UITableView!
     @IBOutlet weak var errorToast: UIView!
+    @IBOutlet weak var searchBar: UISearchBar!
+    
     let movieDbService = MovieDBService()
     var movieDataSource: MovieDataSource!
     var contentLoaderTask: AsyncNetTask?
@@ -24,8 +26,13 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
         setupRefreshControl()
         errorToast.hidden = true
         movieTableView.delegate = self
+        searchBar.delegate = self
         movieDataSource = MovieDataSource(forTable: movieTableView)
-        
+        if #available(iOS 9.0, *) {
+            (UITextField.appearanceWhenContainedInInstancesOfClasses([UISearchBar.self])).textColor = UIColor.whiteColor()
+        }
+        searchBar.tintColor = UIColor(red: 1, green: 204.0/255, blue: 102.0/255, alpha: 1)
+
         //Initial Load
         let progressDialog = MBProgressHUD.showHUDAddedTo(topView, animated: true)
         progressDialog.labelText = "Loading"
@@ -76,6 +83,8 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
         movieDetailsViewController.movie = movie
         movieDetailsViewController.navigationItem.title = movie.title
         movieDetailsViewController.hidesBottomBarWhenPushed = true
+        
+        searchBar.resignFirstResponder()
     }
     
     func showErrorToast() {
@@ -99,6 +108,21 @@ class MoviesViewController: UIViewController, UITableViewDelegate {
                     self.errorToast.hidden = true
             })
         })
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.text = ""
+        movieDataSource.filter = ""
+        searchBar.showsCancelButton = false
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
+        movieDataSource.filter = searchText
+    }
+    
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
     }
 }
 
